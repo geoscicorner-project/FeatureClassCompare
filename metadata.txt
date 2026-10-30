@@ -12,5 +12,5 @@ homepage=https://github.com/geoscicorner-project/FeatureClassCompare
 repository=https://github.com/geoscicorner-project/FeatureClassCompare
 tracker=https://github.com/geoscicorner-project/FeatureClassCompare/issues
 changelog=0.8.15: Release packaging and documentation update. See the repository CHANGELOG.md for the documented feature history.
-experimental=True
+experimental=False
 deprecated=False
