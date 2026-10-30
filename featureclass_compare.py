@@ -333,26 +333,35 @@ class FeatureClassCompareDialog(QDialog):
         """Normalize common OGR field types to compare semantic categories."""
         name = (field.get("type") or "").lower()
         code = field.get("type_code")
-        try:
-            if code in (ogr.OFTInteger, ogr.OFTInteger64):
-                return "Integer"
-            if code == ogr.OFTReal:
-                return "Real"
-            if code in (ogr.OFTString, ogr.OFTWideString):
-                return "String"
-            if code in (ogr.OFTDate, ogr.OFTTime, ogr.OFTDateTime):
-                return {ogr.OFTDate: "Date", ogr.OFTTime: "Time", ogr.OFTDateTime: "DateTime"}[code]
-            if code == ogr.OFTBinary:
-                return "Binary"
-            if code == ogr.OFTIntegerList or code == ogr.OFTInteger64List:
-                return "IntegerList"
-            if code == ogr.OFTRealList:
-                return "RealList"
-            if code in (ogr.OFTStringList, getattr(ogr, "OFTWideStringList", -999)):
-                return "StringList"
-        except Exception:
-            pass
-        return name or "Unknown"
+
+        # Optional OGR constants are looked up safely for GDAL-version
+        # compatibility. Unexpected exceptions are no longer swallowed.
+        type_categories = {}
+
+        for constant_name in ("OFTInteger", "OFTInteger64"):
+            value = getattr(ogr, constant_name, None)
+            if value is not None:
+                type_categories[value] = "Integer"
+
+        for constant_name, category in (
+            ("OFTReal", "Real"),
+            ("OFTString", "String"),
+            ("OFTWideString", "String"),
+            ("OFTDate", "Date"),
+            ("OFTTime", "Time"),
+            ("OFTDateTime", "DateTime"),
+            ("OFTBinary", "Binary"),
+            ("OFTIntegerList", "IntegerList"),
+            ("OFTInteger64List", "IntegerList"),
+            ("OFTRealList", "RealList"),
+            ("OFTStringList", "StringList"),
+            ("OFTWideStringList", "StringList"),
+        ):
+            value = getattr(ogr, constant_name, None)
+            if value is not None:
+                type_categories[value] = category
+
+        return type_categories.get(code, name or "Unknown")
 
     @staticmethod
     def _ambiguities(fields):
