@@ -1,0 +1,16 @@
+[general]
+name=FeatureClass Compare
+qgisMinimumVersion=3.22
+description=Compare Feature Classes and Shapefiles, including loaded File Geodatabase and Shapefile layers from the current QGIS project.
+version=0.8.34
+author=GeosciCorner-Project
+email=geoscicorner@gmail.com
+about=Compare one reference Feature Class with one target Feature Class. Supports File Geodatabase and Shapefile sources, including loaded GDB and Shapefile layers from the current QGIS project. Geometry checks include staged progress reporting, in-memory unmatched bounding boxes, exact bounding-box matching using IoU, and vertex comparison.
+category=Database
+icon=icon.svg
+homepage=https://github.com/geoscicorner-project/FeatureClassCompare
+repository=https://github.com/geoscicorner-project/FeatureClassCompare
+tracker=https://github.com/geoscicorner-project/FeatureClassCompare/issues
+changelog=0.8.32: Added matched-record export with Target geometry and dual-source attributes, export format selection, selectable geometry-match categories for attribute comparison, and refined grouped-header styling.
+experimental=False
+deprecated=False
